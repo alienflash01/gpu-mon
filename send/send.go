@@ -161,21 +161,29 @@ func sendDatas(js []byte, url string) error {
 
 func pushAgent(metaDataList []MetaData) error {
 	falconAgent := getFalconAgent()
-	js, err := json.Marshal(metaDataList)
-	if err != nil {
-		common.Logger.Errorf("Convert metaData from struct to json failed: %v", err)
-		return err
+	haderror := false
+	for , metaData := range metaDataList{
+		js, err := json.Marshal([]MetaData{metaData})
+		if err != nil {
+			err = fmt.Errorf("send %v data failed: %v", metaData.Metric,err)
+			common.Logger.Debug(err)
+			haderror = true
+			continue
+		}
+		err = sendDatas(js, falconAgent)
+		if err != nil{
+			err := fmt.Errorf("send data %v failed: %v", metaData.Metric, err)
+			common.Logger.Debug(err)
+			haderror = true
+		}
 	}
-	err = sendDatas(js, falconAgent)
-	if err != nil {
-		err = fmt.Errorf("send data failed: %v", err)
-		common.Logger.Errorln(err)
-		return err
+	if haderror{
+		return fmt.Errorf("send some data failed")
 	}
 	common.Logger.WithFields(logrus.Fields{
 		" falconAgent url": falconAgent,
 	}).Info("Successful send message to falconAgent")
-	return err
+	return nil
 }
 
 // Data 向falcon上报数据
