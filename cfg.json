@@ -1,0 +1,18 @@
+{
+    "falcon": {
+        "agent": "http://127.0.0.1:1988/v1/push"
+    },
+    "metric":{
+        "ignoreMetrics": [
+            "FanSpeed",
+            "Tx",
+            "Rx"
+        ],
+        "endpoint": "test-tj-ai-g4p40-my"
+    },
+    "log":{
+        "level": "Debug", 
+        "dir": "logs"
+    }
+
+}
