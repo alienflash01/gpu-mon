@@ -8,7 +8,7 @@
             "Tx",
             "Rx"
         ],
-        "endpoint": "test-tj-ai-g4p40-my"
+        "endpoint": "test-tj-gpu"
     },
     "log":{
         "level": "Debug", 

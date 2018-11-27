@@ -162,22 +162,22 @@ func sendDatas(js []byte, url string) error {
 func pushAgent(metaDataList []MetaData) error {
 	falconAgent := getFalconAgent()
 	haderror := false
-	for , metaData := range metaDataList{
+	for _, metaData := range metaDataList {
 		js, err := json.Marshal([]MetaData{metaData})
 		if err != nil {
-			err = fmt.Errorf("send %v data failed: %v", metaData.Metric,err)
+			err = fmt.Errorf("send %v data failed: %v", metaData.Metric, err)
 			common.Logger.Debug(err)
 			haderror = true
 			continue
 		}
 		err = sendDatas(js, falconAgent)
-		if err != nil{
+		if err != nil {
 			err := fmt.Errorf("send data %v failed: %v", metaData.Metric, err)
 			common.Logger.Debug(err)
 			haderror = true
 		}
 	}
-	if haderror{
+	if haderror {
 		return fmt.Errorf("send some data failed")
 	}
 	common.Logger.WithFields(logrus.Fields{
